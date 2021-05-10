@@ -67,8 +67,14 @@ def main():
 
         print("添加")
         time.sleep(t)
-        driver.find_element_by_xpath(
-            '/html/body/div[11]/div/div[1]/section/div[2]/div/div[4]/div[2]/div[1]/div[1]/div/input').send_keys("36.7")
+        if "English Name" in  driver.page_source:
+            driver.find_element_by_xpath(
+                '/html/body/div[11]/div/div[1]/section/div[2]/div/div[3]/div[2]/div[8]/div[1]/div/input').send_keys(
+                "36.7")
+        else:
+            driver.find_element_by_xpath(
+                '/html/body/div[11]/div/div[1]/section/div[2]/div/div[4]/div[2]/div[1]/div[1]/div/input').send_keys(
+                "36.7")
         print("输入体温")
         time.sleep(t)
 
@@ -82,10 +88,13 @@ def main():
         driver.find_element_by_xpath('//*[@id="save"]').click()
         print("点击保存")
         time.sleep(t)
-
-        driver.find_element_by_xpath('/html/body/div[60]/div[1]/div[1]/div[2]/div[2]/a[1]').click()
-        print(name + '\t体温上报成功')
-        msg += name + '\t体温上报成功' + '\n\n'
+        if "确定数据无误并提交数据" in driver.page_source:
+            driver.find_element_by_xpath('/html/body/div[61]/div[1]/div[1]/div[2]/div[2]/a[1]').click()
+            print(name + '\t体温上报成功')
+            msg += name + '\t体温上报成功' + '\n\n'
+        else:
+           print(name + '\t未主动上报一次来完善疫苗信息')
+           msg += name + '\t未主动上报一次来完善疫苗信息' + '\n\n'
         driver.quit()
         return
 
